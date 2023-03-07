@@ -1,0 +1,617 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6.5in, 10in}]{geometry}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{src/references.bib}
+
+\title{Logic Coursework}
+\author{Michal Pluta}
+\date{February 2023}
+
+\newcommand{\True}{\textnormal{T}}
+\newcommand{\False}{\textnormal{F}}
+\newcommand{\predS}{\hspace{0.05cm} \textnormal{S}}
+\newcommand{\predicate}{\predS (x,y,z)}
+\newcommand{\impgap}{\hspace{0.05cm}}
+\newcommand{\imp}{\impgap \longrightarrow \impgap}
+
+% From https://tex.stackexchange.com/questions/47063/rightarrow-vs-implies-and-does-not-imply-symbol
+\newcommand{\notimplies}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\imp$}}}}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    % ------------------------------------------------------------
+    % Question 1
+    % ------------------------------------------------------------
+    \item
+    {
+    To prove a set of logical connectives $F_1$ is functionally complete, you have to show that all the connectives in an already proven complete set of logical connectives $F_2$ can be expressed using the connectives in $F_1$.
+
+    For these questions, I will use $F_2 = \{\lnot, \land, \lor\}$.
+
+    The reason why $\{\lnot, \land, \lor\}$ is functionally complete is because $\{\lnot, \land, \lor\, \rightarrow, \leftrightarrow \}$ is functionally complete and $\{ \rightarrow, \leftrightarrow \}$ can be expressed as:
+    \begin{align*}
+        \varphi \rightarrow \psi &\equiv \lnot \varphi \lor \psi \\
+        \varphi \leftrightarrow \psi &\equiv (\varphi \land \psi) \lor (\lnot \varphi \land \lnot \psi)
+    \end{align*}
+    } \\
+
+    i) \\
+    {
+    In this case, 
+    $$F_1 = \{\lnot, \lor\},$$
+    
+    and all that needs to be shown is that $\land$ can be expressed using the connectives in $F_1$
+    $$\varphi \land \psi \equiv \lnot(\lnot \varphi \lor \lnot \psi)$$
+
+    this is simply an application of \textit{De Morgan's Law} and it shows that the set $F_1$ is functionally complete
+    } \\ \\
+
+    ii) \\
+    {
+    In this case,
+    $$F_1 = \{\rightarrow, 0\},$$
+
+    by showing that
+
+    \begin{center}\begin{tabular}{ccl}\
+    $\lnot \varphi$ & $\equiv$ & $\varphi \rightarrow 0$ \\
+    
+    $\varphi \lor \psi$ & $\equiv$ & $(\varphi \rightarrow 0) \rightarrow \psi$ \\
+    
+    $\varphi \land \psi$ & $\equiv$ & $(((\varphi \rightarrow 0) \rightarrow 0) \rightarrow (\psi \rightarrow 0)) \rightarrow 0$
+    \end{tabular}\end{center}
+    we show that all the logical connectives in $F_2$ can be expressed using the logical connectives in $F_1$ 
+    
+    $\therefore F_1$ is functionally complete
+    } \\ \\
+
+    iii) \\
+    {
+    In this case,
+    $$F_1 = \{\uparrow, \lor\},$$
+
+    by showing that
+
+    \begin{center}\begin{tabular}{ccl}\
+    $\lnot \varphi$ & $\equiv$ & $\varphi \uparrow \varphi$ \\
+    
+    $\varphi \land \psi$ & $\equiv$ & $(\varphi \uparrow \psi) \uparrow (\varphi \uparrow \psi)$
+    \end{tabular}\end{center}
+    we show that all the logical connectives in $F_2$ can be expressed using the logical connectives in $F_1$
+    
+    $\therefore F_1$ is functionally complete
+    } \\ \\
+
+    \pagebreak
+
+    iv)
+    {
+    \begin{center}
+    $\{\rightarrow, \longleftrightarrow\}$ is not functionally complete
+    \end{center}
+   
+    This is because you cannot construct the logical operator $\lnot$ from the connectives in $\{\rightarrow, \longleftrightarrow\}$.
+   
+    More specifically, $\rightarrow$ and $\longleftrightarrow$ are both truth-preserving connectives. This means that they have true outputs whenever the inputs are true therefore it is impossible for the $\lnot$ operator to be constructed.
+    } \\ \\
+
+    \pagebreak
+
+    % ------------------------------------------------------------
+    % Question 2
+    % ------------------------------------------------------------
+    \item
+    i) \\ \\
+    {
+    To show that:
+    $$\forall x \exists y \forall z \predicate \imp \lnot\exists x \forall y \exists z \lnot \predicate$$
+    we can use a deductive proof as follows
+    
+    \begin{center}\begin{tabular}{ccl}\
+    $\forall x \exists y \forall z \predicate$ & $\equiv$ & $\lnot \lnot(\forall x \exists y \forall z \predicate)$ \\
+    & $\equiv$ & $\lnot (\lnot \forall x \exists y \forall z \predicate)$ \\
+    & $\equiv$ & $\lnot(\exists x (\lnot \exists y \forall z \predicate))$ \\
+    & $\equiv$ & $\lnot(\exists x (\forall y (\lnot \forall z \predicate)))$ \\
+    & $\equiv$ & $\lnot(\exists x (\forall y (\exists z (\lnot \predicate))))$ \\
+    & $\equiv$ & $\lnot\exists x \forall y \exists z \lnot \predicate$ \\
+    \end{tabular}\end{center}
+    Therefore the statement $\forall x \exists y \forall z \predicate \imp \lnot\exists x \forall y \exists z \lnot \predicate$
+    } \\ \\
+
+    ii) \\ \\
+    {
+    To disprove:
+    $$\forall x \exists y \forall z \predicate \imp \exists y \forall x \forall z \predicate$$
+    we can use a counterexample: \\
+
+    Let the domain be $\{0, 1\}$ and the model be $\{(0,1,0), (0,1,1), (1,0,0), (1,0,1)\}$
+    }
+    {
+    \begin{center}\begin{tabular}{ccl}\
+    $\forall x \exists y \forall z \predicate$ & $\equiv$ & $\exists y \forall z \predS(0,y,z) \land \exists y \forall z \predS(1,y,z)$ \\ \\
+    
+    & $\equiv$ & $(\forall z \predS(0,0,z) \lor \forall z \predS(0,1,z)) \land (\forall z \predS(1,0,z) \lor \forall z \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\predS(0,0,0) \land \predS(0,0,1)) \lor (\predS(0,1,0) \land \predS(0,1,1))) \hspace{0.1cm} \land$ \\
+    & & $((\predS(1,0,0) \land \predS(1,0,1)) \lor (\predS(1,1,0) \land \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\False \land \False) \lor (\True \land \True)) \land ((\True \land \True) \lor (\False \land \False))$ \\ \\
+    
+    & $\equiv$ & $(\False \lor \True) \land (\True \lor \False)$ \\ \\
+    
+    & $\equiv$ & $\True \land \True$ \\ \\
+    
+    & $\equiv$ & $\True$ \\ 
+    \end{tabular}\end{center}
+    }
+    {
+    %
+    \begin{center}\begin{tabular}{ccl}\
+    $\exists y \forall x \forall z \predicate$ & $\equiv$ & $\forall x \forall z \predS(x,0,z) \lor \forall x \forall z \predS(x,1,z)$ \\ \\
+    
+    & $\equiv$ & $(\forall z \predS(0,0,z) \land \forall z \predS(1,0,z)) \lor (\forall z \predS(0,1,z) \land \forall z \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\predS(0,0,0) \land \predS(0,0,1)) \land (\predS(1,0,0) \land \predS(1,0,1))) \hspace{0.1cm} \lor$ \\
+    & & $((\predS(0,1,0) \land \predS(0,1,1)) \land (\predS(1,1,0) \land \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\False \land \False) \land (\True \land \True)) \lor ((\True \land \True) \land (\False \land \False))$ \\ \\
+    
+    & $\equiv$ & $(\False \land \True) \lor (\True \land \False)$ \\ \\
+    
+    & $\equiv$ & $\False \lor \False$ \\ \\
+    
+    & $\equiv$ & $\False$ \\ 
+    \end{tabular}\end{center}
+
+    Using this model, we have shown that $\True \imp \False$ which is a contradiction hence the original statement is wrong.
+    
+    $$\forall x \exists y \forall z \predicate \notimplies \exists y \forall x \forall z \predicate$$
+    }
+    \pagebreak
+
+    iii) \\ \\
+    {
+    To prove
+    $$\exists y \forall x \forall z \predicate \imp \forall x \exists y \forall z \predicate$$
+
+    one could use the laws of quantifier independence i.e.
+    $$\textbf{Law 8: }(\exists x)(\forall y) \varphi(x,y) \imp (\forall y)(\exists x) \varphi(x,y)$$ 
+    \begin{flushright}
+        \autocite{hammond}
+    \end{flushright}
+    }
+    {
+    However, another way to approach this is to use an intuitive approach. \\
+
+    Let $D$ be any non-empty domain.
+    
+    Suppose $\exists y=k$ where $k \in D$.
+    
+    Let $m \in D$ and $n \in D$.
+
+    For $\exists y \forall x \forall z \predicate$ to be true, the model must contain all possible $(k,m,n)$. \\
+
+    {
+    \hspace{0.5cm} e.g. if $D = \{1, -1\}$ and $y=1$,
+    
+    \hspace{0.5cm} then the model must contain $(1, 1, 1), (1, 1, -1), (-1, 1, 1),$ and $(-1, 1, -1)$.
+    } \\
+
+    What this also means is that, for every possible value of $x$, there exists a value of $y$, namely $y=k$, such that it is true for every value of $z$. \\
+
+    {
+    \hspace{0.5cm} Using the previous example with $D = \{1, -1\}$ and $y=1$,
+    
+    \hspace{0.5cm} For every possible value of $x$, there exists a value of $y$, namely $y=k$ for every value of $z$.
+
+    \hspace{0.5cm} i.e. There are $|D| = 2$ possible values for $x$
+    
+    \hspace{1.13cm} If $x=1$, $(1,1,1)$ and $(1,1,-1)$ exist, so there exists a $y$ $(=1)$ for all $z$
+    
+    \hspace{1.13cm} If $x=-1$, $(-1,1,1)$ and $(-1,1,-1)$ exist, so there exists a $y$ $(=1)$ for all $z$ \\
+
+    \hspace{0.5cm} $\therefore \forall x \exists y \forall z \predicate$.
+    }
+    
+    }
+
+    \pagebreak
+
+    iv) \\ \\
+    {
+    To disprove:
+    $$\exists y \forall x \forall z \lnot \predicate \imp \lnot \forall x \exists y \forall z \predicate$$
+    we can use a counterexample: \\
+
+    Let the domain be $\{0, 1\}$ and the model be $\{(0,1,0), (0,1,1), (1,1,0), (1,1,1)\}$
+    }
+    {
+    \begin{center}\begin{tabular}{ccl}\
+   $\exists y \forall x \forall z \lnot \predicate$ & $\equiv$ & $\forall x \forall z \lnot \predS(x,0,z) \lor \forall x \forall z \lnot \predS(x,1,z)$ \\ \\
+    
+    & $\equiv$ & $(\forall z \lnot \predS(0,0,z) \land \forall z \lnot \predS(1,0,z)) \lor (\forall z \lnot \predS(0,1,z) \land \forall z \lnot \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\lnot \predS(0,0,0) \land \lnot \predS(0,0,1)) \land (\lnot \predS(1,0,0) \land \lnot \predS(1,0,1))) \hspace{0.1cm} \lor$ \\
+    & & $((\lnot \predS(0,1,0) \land \lnot \predS(0,1,1)) \land (\lnot \predS(1,1,0) \land \lnot \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\True \land \True) \land (\True \land \True)) \lor ((\False \land \False) \land (\False \land \False))$ \\ \\
+    
+    & $\equiv$ & $(\True \land \True) \lor (\False \land \False)$ \\ \\
+    
+    & $\equiv$ & $\True \lor \False$ \\ \\
+    
+    & $\equiv$ & $\True$ \\ 
+    \end{tabular}\end{center}
+    }
+    {
+    %
+    \begin{center}\begin{tabular}{ccl}\
+    $\lnot \forall x \exists y \forall z \predicate$ & $\equiv$ & $\lnot (\exists y \forall z \predS(0,y,z) \land \exists y \forall z \predS(1,y,z))$ \\ \\
+    
+    & $\equiv$ & $\lnot ((\forall z \predS(0,0,z) \lor \forall z \predS(0,1,z)) \land (\forall z \predS(1,0,z) \lor \forall z \predS(1,1,z))) \hspace{0.42cm}$ \\ \\
+    
+    & $\equiv$ & $\lnot (((\predS(0,0,0) \land \predS(0,0,1)) \lor (\predS(0,1,0) \land \predS(0,1,1))) \hspace{0.1cm} \land$ \\
+    & & $\hspace{0.235cm} ((\predS(1,0,0) \land \predS(1,0,1)) \lor (\predS(1,1,0) \land \predS(1,1,1)))) \hspace{0.42cm}$ \\ \\
+    
+    & $\equiv$ & $\lnot (((\False \land \False) \lor (\True \land \True)) \land ((\False \land \False) \lor (\True \land \True)))$ \\ \\
+    
+    & $\equiv$ & $\lnot ((\False \lor \True) \land (\False \lor \True))$ \\ \\
+    
+    & $\equiv$ & $\lnot (\True \land \True)$ \\ \\
+    
+    & $\equiv$ & $\lnot (\True)$ \\ \\
+
+    & $\equiv$ & $\False$ \\ 
+    \end{tabular}\end{center}
+
+    Using this model, we have shown that $\True \imp \False$ which is a contradiction hence the original statement is wrong.
+    
+    $$\exists y \forall x \forall z \lnot \predicate \notimplies \lnot \forall x \exists y \forall z \predicate$$
+    }
+    \pagebreak
+
+    % ------------------------------------------------------------
+    % Question 3
+    % ------------------------------------------------------------
+    \item
+    {
+    There are two main ways to approach these questions
+    \begin{enumerate}[1.]
+        \item
+        Constructing a visual aid in the form of a parse tree which represents the predicate statement, and then going up the parse tree checking if the elements in the domain satisfy each branch
+        \item
+        Representing the predicate statement using propositional logic, and then evaluating statement.
+    \end{enumerate}
+    For these questions, I will use a combination of both. \\
+
+    Domain = $\{0, 1\}$ \\
+    A dashed line represents the existential quantifier \\
+    A solid line represents the universal quantifier
+    } \\
+    
+    (i) 
+    {
+    Evaluate $\forall x \exists y \forall z \hspace{0.05cm} \textnormal{S}(x,y,z)$ on $\{(0,1,0), (1,0,1), (0,1,1), (1,0,0)\}$
+    } \\
+    {
+    \begin{center}\begin{tikzpicture}
+    \node {$\forall x$} [
+        level 1/.style={sibling distance=8cm},
+        level 2/.style={sibling distance=4cm}, 
+        level 3/.style={sibling distance=4cm},
+        level 4/.style={sibling distance=2cm}
+    ]
+        child {node {$x=0$}
+            child {node {$\exists y$}
+                child {node {$y=0$}
+                    child {node {$\forall z$}
+                        child {node [label=below:$(0\,0\,0)$] {$z=0$}}
+                        child {node [label=below:$(0\,0\,1)$] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [black, dashed]
+                } 
+                child {node {$y=1$}
+                    child {node {$\forall z$}
+                         child {node [label=below:\textcolor{green}{$(0\,1\,0)$}] {$z=0$}}
+                         child {node [label=below:\textcolor{green}{$(0\,1\,1)$}] {$z=1$}}
+                         edge from parent [solid]
+                    }
+                    edge from parent [dashed]
+                }
+            } edge from parent [green]
+        }
+        child {node {$x=1$}
+            child {node {$\exists y$}
+                child {node {$y=0$}
+                    child {node {$\forall z$} 
+                        child {node [label=below:\textcolor{green}{$(1\,0\,0)$}] {$z=0$}}
+                        child {node [label=below:\textcolor{green}{$(1\,0\,1)$}] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [dashed]
+                }
+                child {node {$y=1$}
+                    child {node {$\forall z$}
+                        child {node [label=below:$(1\,1\,0)$] {$z=0$}}
+                        child {node [label=below:$(1\,1\,1)$] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [black, dashed]
+                }
+            } edge from parent [green]
+        };
+    \end{tikzpicture}
+    Figure 1: Visual representation of $\forall x \exists y \forall z \predicate$
+    
+    $ $
+    \end{center}
+    }
+    {
+    \begin{align*}
+    \forall x \exists y \forall z \predicate &\equiv \exists y \forall z \predS(0,y,z) \land \exists y \forall z \predS(1,y,z) \\ \\
+    &\equiv (\forall z \predS(0,0,z) \lor \forall z \predS(0,1,z)) \land (\forall z \predS(1,0,z) \lor \forall z \predS(1,1,z)) \\ \\
+    &\equiv ((\predS(0,0,0) \land \predS(0,0,1)) \lor (\predS(0,1,0) \land \predS(0,1,1))) \hspace{0.1cm} \land \\
+    & \hspace{0.48cm} ((\predS(1,0,0) \land \predS(1,0,1)) \lor (\predS(1,1,0) \land \predS(1,1,1))) \\ \\
+    &\equiv ((\False \land \False) \lor (\True \land \True)) \land ((\True \land \True) \lor (\False \land \False)) \\ \\
+    &\equiv (\False \lor \True) \land (\True \lor \False)\\ \\
+    &\equiv \True \land \True \\ \\
+    &\equiv \True \\ 
+    \end{align*}
+    This shows that the sentence is true on the provided model.
+    }
+
+    \pagebreak
+
+    (ii) 
+    {
+    Evaluate $\forall x \exists y \forall z \hspace{0.05cm} \textnormal{S}(x,y,z)$ on $\{(0,1,1), (1,0,0), (0,1,0), (0,0,1), (0,0,0)\}$
+    } \\
+    {
+    \begin{center}\begin{tikzpicture}
+    \node {$\forall x$} [
+        level 1/.style={sibling distance=8cm},
+        level 2/.style={sibling distance=4cm}, 
+        level 3/.style={sibling distance=4cm},
+        level 4/.style={sibling distance=2cm}
+    ]
+        child {node {$x=0$}
+            child {node {$\exists y$}
+                child {node {$y=0$}
+                    child {node {$\forall z$}
+                        child {node [label=below:\textcolor{green}{$(0\,0\,0)$}] {$z=0$}}
+                        child {node [label=below:\textcolor{green}{$(0\,0\,1)$}] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [dashed]
+                } 
+                child {node {$y=1$}
+                    child {node {$\forall z$}
+                         child {node [label=below:\textcolor{green}{$(0\,1\,0)$}] {$z=0$}}
+                         child {node [label=below:\textcolor{green}{$(0\,1\,1)$}] {$z=1$}}
+                         edge from parent [solid]
+                    }
+                    edge from parent [dashed]
+                }
+            } edge from parent [green]
+        }
+        child {node {$x=1$}
+            child {node {$\exists y$}
+                child {node {$y=0$}
+                    child {node {$\forall z$} 
+                        child {node [label=below:\textcolor{green}{$(1\,0\,0)$}] {$z=0$} edge from parent [green]}
+                        child {node [label=below:$(1\,0\,1)$] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [dashed]
+                }
+                child {node {$y=1$}
+                    child {node {$\forall z$}
+                        child {node [label=below:$(1\,1\,0)$] {$z=0$}}
+                        child {node [label=below:$(1\,1\,1)$] {$z=1$}}
+                        edge from parent [solid]
+                    } edge from parent [dashed]
+                }
+            } edge from parent [red]
+        };
+    \end{tikzpicture}
+    Figure 1: Visual representation of $\forall x \exists y \forall z \predicate$
+    
+    $ $
+    \end{center}
+    }
+    {
+    \begin{center}\begin{tabular}{ccl}\
+    $\forall x \exists y \forall z \predicate$ & $\equiv$ & $\exists y \forall z \predS(0,y,z) \land \exists y \forall z \predS(1,y,z)$ \\ \\
+    
+    & $\equiv$ & $(\forall z \predS(0,0,z) \lor \forall z \predS(0,1,z)) \land (\forall z \predS(1,0,z) \lor \forall z \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\predS(0,0,0) \land \predS(0,0,1)) \lor (\predS(0,1,0) \land \predS(0,1,1))) \hspace{0.1cm} \land$ \\
+    & & $((\predS(1,0,0) \land \predS(1,0,1)) \lor (\predS(1,1,0) \land \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\True \land \True) \lor (\True \land \True)) \land ((\True \land \False) \lor (\False \land \False))$ \\ \\
+    
+    & $\equiv$ & $(\True \lor \True) \land (\False \lor \False)$ \\ \\
+    
+    & $\equiv$ & $\True \land \False$ \\ \\
+    
+    & $\equiv$ & $\False$ \\ 
+    \end{tabular}\end{center}
+    This shows that the sentence is false on the provided model.
+    }
+
+    \pagebreak
+
+    (iii) 
+    {
+    Evaluate $\exists y \forall x \exists z \predicate$ on $\{(1,0,0), (0,0,1), (1,1,1)\}$
+    } \\
+    {
+    \begin{center}\begin{tikzpicture}
+    \node {$\exists y$} [
+        level 1/.style={sibling distance=8cm},
+        level 2/.style={sibling distance=4cm}, 
+        level 3/.style={sibling distance=4cm},
+        level 4/.style={sibling distance=2cm}
+    ]
+        child {node {$y=0$}
+            child {node {$\forall x$}
+                child {node {$x=0$}
+                    child {node {$\exists z$}
+                        child {node [label=below:$(0\,0\,0)$] {$z=0$}
+                        edge from parent [dashed, black]}
+                        child {node [label=below:\textcolor{green}{$(0\,0\,1)$}] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                } 
+                child {node {$x=1$}
+                    child {node {$\exists z$}
+                         child {node [label=below:\textcolor{green}{$(1\,0\,0)$}] {$z=0$}
+                         edge from parent [dashed]}
+                         child {node [label=below:$(1\,0\,1)$] {$z=1$}
+                         edge from parent [dashed, black]}
+                    }
+                }
+                edge from parent [solid]
+            } edge from parent [dashed, green]
+        }
+        child {node {$y=1$}
+            child {node {$\forall x$}
+                child {node {$x=0$}
+                    child {node {$\exists z$} 
+                        child {node [label=below:$(0\,1\,0)$] {$z=0$} edge from parent [dashed]}
+                        child {node [label=below:$(0\,1\,1)$] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                    edge from parent [red]
+                }
+                child {node {$x=1$}
+                    child {node {$\exists z$}
+                        child {node [label=below:$(1\,1\,0)$] {$z=0$}
+                        edge from parent [dashed, black]}
+                        child {node [label=below:\textcolor{green}{$(1\,1\,1)$}] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                    edge from parent [green]
+                }
+                edge from parent [solid]
+            } edge from parent [dashed]
+        };
+    \end{tikzpicture}
+    Figure 1: Visual representation of $\exists y \forall x \exists z \predicate$
+    
+    $ $
+    \end{center}
+    }
+    {
+    \begin{center}\begin{tabular}{ccl}\
+   $\exists y \forall x \exists z \predicate$ & $\equiv$ & $\forall x \exists z \predS(x,0,z) \lor \forall x \exists z \predS(x,1,z)$ \\ \\
+    
+    & $\equiv$ & $(\exists z \predS(0,0,z) \land \exists z \predS(1,0,z)) \lor (\exists z \predS(0,1,z) \land \exists z \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\predS(0,0,0) \lor \predS(0,0,1)) \land (\predS(1,0,0) \lor \predS(1,0,1))) \hspace{0.1cm} \lor$ \\
+    & & $((\predS(0,1,0) \lor \predS(0,1,1)) \land (\predS(1,1,0) \lor \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\False \lor \True) \land (\True \lor \False)) \lor ((\False \lor \False) \land (\False \lor \True))$ \\ \\
+    
+    & $\equiv$ & $(\True \land \True) \lor (\False \land \True)$ \\ \\
+    
+    & $\equiv$ & $\True \lor \False$ \\ \\
+    
+    & $\equiv$ & $\True$ \\ 
+    \end{tabular}\end{center}
+    This shows that the sentence is true on the provided model.
+    }
+
+    \pagebreak
+
+    (iv) 
+    {
+    Evaluate $\exists y \forall x \exists z \predicate$ on $\{(1,0,0), (0,1,0), (0,1,1)\}$
+    } \\
+    {
+    \begin{center}\begin{tikzpicture}
+    \node {$\exists y$} [
+        level 1/.style={sibling distance=8cm},
+        level 2/.style={sibling distance=4cm}, 
+        level 3/.style={sibling distance=4cm},
+        level 4/.style={sibling distance=2cm}
+    ]
+        child {node {$y=0$}
+            child {node {$\forall x$}
+                child {node {$x=0$}
+                    child {node {$\exists z$}
+                        child {node [label=below:$(0\,0\,0)$] {$z=0$}
+                        edge from parent [dashed]}
+                        child {node [label=below:$(0\,0\,1)$] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                } 
+                child {node {$x=1$}
+                    child {node {$\exists z$}
+                         child {node [label=below:\textcolor{green}{$(1\,0\,0)$}] {$z=0$}
+                         edge from parent [dashed]}
+                         child {node [label=below:$(1\,0\,1)$] {$z=1$}
+                         edge from parent [dashed, black]}
+                    }
+                    edge from parent [green]
+                }
+                edge from parent [solid]
+            } edge from parent [dashed, red]
+        }
+        child {node {$y=1$}
+            child {node {$\forall x$}
+                child {node {$x=0$}
+                    child {node {$\exists z$} 
+                        child {node [label=below:\textcolor{green}{$(0\,1\,0)$}] {$z=0$} edge from parent [dashed]}
+                        child {node [label=below:\textcolor{green}{$(0\,1\,1)$}] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                    edge from parent [green]
+                }
+                child {node {$x=1$}
+                    child {node {$\exists z$}
+                        child {node [label=below:$(1\,1\,0)$] {$z=0$}
+                        edge from parent [dashed]}
+                        child {node [label=below:$(1\,1\,1)$] {$z=1$}
+                        edge from parent [dashed]}
+                    }
+                }
+                edge from parent [solid]
+            } edge from parent [dashed, red]
+        };
+    \end{tikzpicture}
+    Figure 1: Visual representation of $\exists y \forall x \exists z \predicate$
+    
+    $ $
+    \end{center}
+    }
+    {
+    \begin{center}\begin{tabular}{ccl}\
+    $\exists y \forall x \exists z \predicate$ & $\equiv$ & $\forall x \exists z \predS(x,0,z) \lor \forall x \exists z \predS(x,1,z)$ \\ \\
+    
+    & $\equiv$ & $(\exists z \predS(0,0,z) \land \exists z \predS(1,0,z)) \lor (\exists z \predS(0,1,z) \land \exists z \predS(1,1,z))$ \\ \\
+    
+    & $\equiv$ & $((\predS(0,0,0) \lor \predS(0,0,1)) \land (\predS(1,0,0) \lor \predS(1,0,1))) \hspace{0.1cm} \lor$ \\
+    & & $((\predS(0,1,0) \lor \predS(0,1,1)) \land (\predS(1,1,0) \lor \predS(1,1,1)))$ \\ \\
+    
+    & $\equiv$ & $((\False \lor \False) \land (\True \lor \False)) \lor ((\True \lor \True) \land (\False \lor \False))$ \\ \\
+    
+    & $\equiv$ & $(\False \land \True) \lor (\True \land \False)$ \\ \\
+    
+    & $\equiv$ & $\False \lor \False$ \\ \\
+    
+    & $\equiv$ & $\False$ \\ 
+    \end{tabular}\end{center}
+    This shows that the sentence is false on the provided model.
+    }  
+\end{enumerate}
+
+\pagebreak
+\printbibliography
+
+\end{document}
